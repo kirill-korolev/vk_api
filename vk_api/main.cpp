@@ -1,15 +1,12 @@
-//
-//  main.cpp
-//  vk_api
-//
-//  Created by Kirill Korolev on 16/01/2018.
-//  Copyright © 2018 Kirill Korolev. All rights reserved.
-//
+#include "mainwindow.h"
+#include <QApplication>
 
-#include <iostream>
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    return a.exec();
 }
+
