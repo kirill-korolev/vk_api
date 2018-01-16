@@ -13,6 +13,9 @@
 namespace vk_api {
     const std::string constant::auth_url = "https://oauth.vk.com/authorize?";
     const std::string constant::version = "5.69";
+    const std::string constant::response_type = "token";
+    const std::string constant::redirect_uri = "https://oauth.vk.com/blank.html";
+    const std::string constant::display_type = "page";
 }
 
 namespace vk_api {
@@ -147,26 +150,28 @@ namespace vk_api {
     
     
     bool auth(const std::string& client_id,
-              const std::string& redirect_uri,
               scopes::scope_t scopes,
-              const std::string& v){
+              auth_callback f,
+              const std::string& redirect_uri){
         
         params ps = {
             { "client_id", client_id },
             { "scope", scopes::to_string(scopes) },
             { "redirect_uri", redirect_uri },
-            { "v", v }
+            { "response_type", constant::response_type },
+            { "v", constant::version }
         };
         
         std::string ps_encoded = utility::build_params(ps);
         std::string curl_buffer;
         std::string response = request(constant::auth_url, ps_encoded, curl_buffer);
-        
+
         if(response == curly::empty_result) {
             return false;
         }
-        
-        std::cout << response << std::endl;
+
+        std::string tokenized_str = f(response);
+
         return true;
     }
 }

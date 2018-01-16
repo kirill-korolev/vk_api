@@ -21,6 +21,9 @@ namespace vk_api {
     struct constant{
         static const std::string auth_url;
         static const std::string version;
+        static const std::string response_type;
+        static const std::string redirect_uri;
+        static const std::string display_type;
     };
     
     // utility methods
@@ -66,10 +69,12 @@ namespace vk_api {
         static result_t writer(char* data, size_t size, size_t nmemb, std::string* buffer);
     };
     
+    typedef std::string (*auth_callback)(const std::string&);
+
     bool auth(const std::string& client_id,
-              const std::string& redirect_uri,
               scopes::scope_t scopes,
-              const std::string& v=constant::version);
+              auth_callback f,
+              const std::string& redirect_uri=constant::redirect_uri);
     
     std::string request(const std::string& url, const std::string& ps, std::string& curl_buffer);
 }
