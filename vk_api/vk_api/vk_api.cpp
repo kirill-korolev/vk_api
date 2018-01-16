@@ -97,7 +97,7 @@ namespace vk_api {
 
 namespace vk_api {
     
-    const std::string empty_result = "";
+    const std::string curly::empty_result = "";
     
     curly::result_t curly::writer(char* data, size_t size, size_t nmemb, std::string* buffer){
         result_t result = 0;
@@ -142,7 +142,7 @@ namespace vk_api {
         }
         
         curl_easy_cleanup(curl);
-        return empty_result;
+        return curly::empty_result;
     }
     
     
