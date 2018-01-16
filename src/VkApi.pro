@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-INCLUDEPATH += C:\Program Files\cURL\include
-LIBS += C:\Program Files\cURL\lib\libcurl.lib
+INCLUDEPATH     += "$$PWD/curl/include/"
 
 QT       += core gui webenginewidgets
 

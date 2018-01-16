@@ -6,7 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->m_webview->load(QUrl("http://yandex.ru"));
+
+    vk_api::auth("6334044", vk_api::scopes::friends, [](const std::string& c) -> std::string{
+        return "";
+    });
 }
 
 MainWindow::~MainWindow()

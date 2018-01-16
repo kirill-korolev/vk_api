@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "vk_api/vk_api.h"
 #include <QtWidgets/QMainWindow>
 
 namespace Ui {
