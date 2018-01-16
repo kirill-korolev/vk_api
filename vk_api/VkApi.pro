@@ -4,6 +4,9 @@
 #
 #-------------------------------------------------
 
+INCLUDEPATH += C:\Program Files\cURL\include
+LIBS += C:\Program Files\cURL\lib\libcurl.lib
+
 QT       += core gui webenginewidgets
 
 TARGET = VkApi
@@ -28,10 +31,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    vk_api/vk_api.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    vk_api/vk_api.h
 
 FORMS += \
         mainwindow.ui
