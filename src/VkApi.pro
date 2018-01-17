@@ -4,12 +4,12 @@
 #
 #-------------------------------------------------
 
-INCLUDEPATH     += "$$PWD/curl/include/"
 
 QT       += core gui webenginewidgets
 
 TARGET = VkApi
 TEMPLATE = app
+CONFIG += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4) {
         QT += widgets
@@ -31,11 +31,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    vk_api/vk_api.cpp
+    vk_api/vk_api.cpp \
+    urlrequestinterceptor.cpp \
+    vk_api/vk_api_utility.cpp
 
 HEADERS += \
         mainwindow.h \
-    vk_api/vk_api.h
+    vk_api/vk_api.h \
+    urlrequestinterceptor.h \
+    vk_api/vk_api_utility.h
 
 FORMS += \
         mainwindow.ui
+
+LIBS += -lcurl
