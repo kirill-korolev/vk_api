@@ -9,13 +9,11 @@
 #ifndef vk_api_h
 #define vk_api_h
 
+#include "vk_api_utility.h"
 #include <string>
 #include <unordered_map>
 
 namespace vk_api {
-    
-    // get parameters
-    using params = std::unordered_map<std::string, std::string>;
     
     // vk_api constants
     struct constant{
@@ -24,16 +22,6 @@ namespace vk_api {
         static const std::string response_type;
         static const std::string redirect_uri;
         static const std::string display_type;
-    };
-    
-    // utility methods
-    struct utility{
-        static std::string build_params(const params& ps);
-        static std::string encode_url(const std::string& url);
-    };
-    
-    struct converter{
-        static std::string char_to_hex(const char& c);
     };
     
     // api permissions scopes
@@ -63,20 +51,36 @@ namespace vk_api {
         static std::string to_string(scope_t sc);
     };
     
-    struct curly{
-        typedef size_t result_t;
-        static const std::string empty_result;
-        static result_t writer(char* data, size_t size, size_t nmemb, std::string* buffer);
-    };
-    
-    typedef std::string (*auth_callback)(const std::string&);
+}
 
+namespace vk_api {
+
+    template <typename callback_function>
     bool auth(const std::string& client_id,
               scopes::scope_t scopes,
-              auth_callback f,
-              const std::string& redirect_uri=constant::redirect_uri);
-    
-    std::string request(const std::string& url, const std::string& ps, std::string& curl_buffer);
+              callback_function f,
+              const std::string& redirect_uri=constant::redirect_uri){
+
+        utils::params ps = {
+            { "client_id", client_id },
+            { "scope", scopes::to_string(scopes) },
+            { "redirect_uri", redirect_uri },
+            { "response_type", constant::response_type },
+            { "v", constant::version }
+        };
+
+        std::string ps_encoded = utils::build_params(ps);
+        std::string curl_buffer;
+        std::string response = utils::request(constant::auth_url, ps_encoded, curl_buffer);
+
+        if(response == utils::curly::empty_result) {
+            return false;
+        }
+
+        std::string tokenized_str = f(response);
+
+        return true;
+    }
 }
 
 #endif /* vk_api_h */
